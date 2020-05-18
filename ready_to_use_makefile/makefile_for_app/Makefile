@@ -25,19 +25,12 @@ TOPDIR := $(shell pwd)
 export TOPDIR
 
 TARGET := test
-PRE_BUILD  = @echo PRE
-POST_BUILD = @echo POST
+PRE_BUILD  := @echo PRE
+POST_BUILD := @echo POST
 
 obj-y += main.o
 obj-y += sub.o
 obj-y += a/
-
-
-pre-build:
-	@$(PRE_BUILD)
-
-post-build:
-	@$(POST_BUILD)
 
 all : pre-build start_recursive_build $(TARGET) post-build
 	@echo $(TARGET) has been built!
@@ -47,6 +40,12 @@ start_recursive_build:
 
 $(TARGET) : built-in.o
 	$(CC) -o $(TARGET) built-in.o $(LDFLAGS)
+
+pre-build:
+	@$(PRE_BUILD)
+
+post-build:
+	@$(POST_BUILD)
 
 clean:
 	rm -f $(shell find -name "*.o")

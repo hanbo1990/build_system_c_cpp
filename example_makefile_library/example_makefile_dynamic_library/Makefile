@@ -14,23 +14,21 @@ OBJDUMP		= $(CROSS_COMPILE)objdump
 export AS LD CC CPP AR NM
 export STRIP OBJCOPY OBJDUMP
 
-CFLAGS := -Wall -O2 -g
+CFLAGS := -Wall -O2 -g -fPIC
 CFLAGS += -I $(shell pwd)/include
 
-LDFLAGS := 
+LDFLAGS := -fPIC
 
 export CFLAGS LDFLAGS
 
 TOPDIR := $(shell pwd)
 export TOPDIR
 
-TARGET := test
-PRE_BUILD  := ./scripts/prebuild.sh
-POST_BUILD :=./scripts/postbuild.sh
+TARGET := test.so
+PRE_BUILD  :=
+POST_BUILD :=
 
-obj-y += main.o
-obj-y += sub.o
-obj-y += sub23/
+obj-y += sub/
 
 all : pre-build start_recursive_build $(TARGET) post-build
 	@echo $(TARGET) has been built! 	
@@ -39,7 +37,7 @@ start_recursive_build:
 	make -C ./ -f $(TOPDIR)/Makefile.build
 
 $(TARGET) : built-in.o
-	$(CC) -o $(TARGET) built-in.o $(LDFLAGS)
+	$(CC) -shared  -o $(TARGET) built-in.o $(LDFLAGS)
 
 pre-build:
 	@$(PRE_BUILD)
