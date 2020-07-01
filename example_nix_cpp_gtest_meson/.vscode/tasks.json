@@ -1,0 +1,36 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "meson builddir && ninja -C builddir",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+
+        {
+            "label": "gencoverage",
+            "type": "shell",
+            "command": "ninja coverage-html -C builddir",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+
+        {
+            "label": "export-without-build",
+            "type": "shell",
+            "command": "mkdir -p output && cp -R builddir/meson-logs/coveragereport ./output/ && cp builddir/test_app output/",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }    
+        }
+    ]
+}

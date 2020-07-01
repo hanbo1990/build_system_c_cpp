@@ -1,0 +1,12 @@
+build/**
+builddir/**
+CMakeFiles/**
+CMakeCache.txt
+CTestTestfile.cmake
+Makefile
+cmake_install.cmake
+*/CMakeFiles/**
+
+# executalbe
+examples
+tests
